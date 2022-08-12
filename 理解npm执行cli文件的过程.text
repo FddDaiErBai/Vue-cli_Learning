@@ -1,0 +1,56 @@
+{
+  "name": "my_project",
+  "version": "0.1.0",
+  "private": true,
+  
+  在scripts这个对象中的key就是npm run的命令值
+
+  vue-cli提供了三个命令
+  serve 这个是我们开发使用的命令 执行编译和热更新（ctrl+s的时候浏览器会实时更新）
+  build 工作中如果我们本地调试完后需要部署代码前 进行打包的命令
+  lint  作用是检验文件代码的合格性（对eslint的校验）
+
+  以npm run serve 为例
+  第一步命令会从node_modules文件夹中的.bin文件夹内部的vue-cli-service文件
+
+  service.js文件是整个编译过程的核心文件
+
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^2.6.14"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
