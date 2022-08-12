@@ -1,0 +1,61 @@
+main.js文件
+import Vue from 'vue'
+相对路径引入的App.js文件
+import App from './App.vue'
+
+这行命令的作用是给生产环境配置的提示消息 如果为true或者默认不配置 会有相关提示语；
+Vue.config.productionTip = false
+
+new Vue({
+    render 渲染节点
+  render: h => h(App),
+  mount 挂载函数 内部#app是vue的根节点
+}).$mount('#app')
+
+
+public>index.html根文件
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
+
+noscript标签的作用是当script标签加载不出来时或者抛出错误的时候替换内容 目的是在浏览器中提供友好提示
+<div id="app"></div>是整个vue项目的根标签 vue需要挂载的标签
+
+App.vue文件
+App.vue文件文件是整个项目的根组件 项目中的所有页面切换 页面显示都是在这个组件基础上进行渲染的
+
+我们将整个App.vue文件清空后发现
+<template>
+  <div id="app"></div>
+</template>
+
+<script>
+export default {
+  components: {},
+};
+</script>
+
+<style>
+</style>
+
+上面的结构是.vue文件的基础结构
+
+<template>元素的作用是搭建vue文件的结构
+<script>元素的作用是对当前文件逻辑的交互
+<style>元素的作用是对当前文件的样式的修饰
+
+我们之前的开发中.js文件只有逻辑 .css文件只有样式 .html文件只有结构 但是vue的组件就是将视图和逻辑进行了一个整合
