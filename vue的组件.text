@@ -1,0 +1,162 @@
+所有的vue组件都是以.vue格式结尾的文件
+我们看到的vue-cli中的App.vue文件就是整个vue的根组件
+<template>
+  <div></div>
+</template>
+
+<script>
+export default {
+  data() {
+  },
+};
+</script>
+
+<style>
+</style>
+
+
+一个vue文件就是一个类
+
+需要注意的是data必须是一个函数
+
+最外层必须有默认暴露
+<script>
+export default {
+  data() {
+    return {
+    }
+  },
+};
+</script>
+
+我们后面写的所有vue的对象清单都必须在export default里去罗列
+
+在我们之前写data的时候是一个对象
+let app = nee Vue(){
+    data:{
+        name:"Leo"
+    }
+}
+我们发现data是一个对象
+
+如果在我们组件中data必须是一个函数 是因为防止数据之间冲突
+<script>
+export default {
+  data() {
+    return {
+      a:"Leo"
+    }
+  },
+};
+</script>
+data是一个函数 返回的是一个对象 目的是为了让每个组件数据隔离 这个是因为JavaScript的原理 并不是vue去设计的
+
+为什么vue的data必须是一个函数
+我们从JavaScript面向对象开始
+<script>
+    let config = {
+        data: {
+            return {
+                name:"Leo"
+            }
+        },
+    }
+    let People = function(config){
+        this.data = config.data
+    }
+
+    let Leo = new People(config)
+    let Lex = new People(config)
+    Lex.data.name = "Lex"
+    console.log(Leo.data.name)
+    console.log(Lex.data.name)
+</script>
+此时浏览器会输出两个Lex
+
+我们知道复杂数据类型指向的都是同一个地址 所以当Lex.data.name修改的时候 Leo.data.name也就随之修改
+
+解决办法就是config对象返回一个data函数 这个函数return一个对象
+
+let config = {
+    data() {
+        return {
+            name:"Leo"
+        }
+    },
+}
+let People = function(config){
+    this.data = config.data()
+}
+此时People的对象返回的是一个对象 不是一个地址 每个实例拿到的都是一个独立的 个体的对象 互相不会数据冲突 这个就是vue组件data为什么是函数的原因
+
+如何使用自定义组件？
+第一步 创建自己的组件
+比如在components文件夹创建一个LeoMashiro.vue文件
+
+App.vue文件
+<template>
+  <div>
+    <LeoMashiro></LeoMashiro>
+  </div>
+</template>
+
+<script>
+// 引入组件
+import LeoMashiro from './components/LeoMashiro.vue';
+export default {
+  // 注册组件
+  components:{
+    LeoMashiro
+  },
+  data() {
+  },
+};
+</script>
+
+<style>
+</style>
+
+
+总结使用组件三步走
+
+创建vue文件
+在要渲染的地方引入该组件
+注册该组件
+
+<LeoMashiro></LeoMashiro>组件内容
+
+<template>
+  <div>
+    <h1>我是LeoMashiro{{a}}</h1>
+    <button @click="add">按我加1</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      a:100
+    }
+  },
+  methods: {
+    add(){
+      this.a++
+    }
+  },
+};
+</script>
+
+<style>
+</style>
+
+组件是可以复用的 并且数据是隔离的
+再给App.vue多添加几个
+
+<template>
+  <div>
+    <LeoMashiro></LeoMashiro>
+    <LeoMashiro></LeoMashiro>
+    <LeoMashiro></LeoMashiro>
+  </div>
+</template>
