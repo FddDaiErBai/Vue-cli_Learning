@@ -1,7 +1,6 @@
 <template>
   <div>
-    <LeoMashiro></LeoMashiro>
-    <LeoMashiro></LeoMashiro>
+    <LeoMashiro :leomashiro-value="a" :value-b="b" :value-c="c"></LeoMashiro>
   </div>
 </template>
 
@@ -14,6 +13,11 @@ export default {
     LeoMashiro
   },
   data() {
+    return{
+      a:102,
+      b:130,
+      c:140
+    }
   },
 };
 </script>

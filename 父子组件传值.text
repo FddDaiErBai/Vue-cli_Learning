@@ -1,0 +1,102 @@
+我们使用组件一定是依托在某一个父组件身上 比如我们上面写的LeoMashiro.vue文件就是依托在App.vue文件中
+此时我们如果要使用App.vue文件中的值怎么办
+
+vue提供了一个props的入口 也就是父子组件之间唯一的传值方式 父组件通过v-bind自定义属性传入值 子组件通过props接收对应的参数
+
+父组件
+<template>
+  <div>
+    <LeoMashiro :leomashiro-value="a"></LeoMashiro>
+  </div>
+</template>
+
+通过v-bind自定义属性传值 注意由于vue的属性对于大小写不敏感 所以如果需要写驼峰命名 需要使用横杠隔开
+
+data() {
+    return{
+        a:102
+    }
+}
+
+子组件
+<script>
+export default {
+  // 罗列父组件传进来的属性值
+  props:["LeoMashiroValue"],
+};
+</script>
+
+<template>
+  <div>
+    <h1>我是LeoMashiro 我接收到的父组件的值是：{{LeoMashiroValue}}</h1>
+  </div>
+</template>
+
+子组件通过props罗列父组件的传值 接收的参数可以有多个 props可以是数组 也可以是对象
+
+父组件
+<div>
+    <LeoMashiro :leomashiro-value="a"></LeoMashiro>
+</div>
+
+子组件接收 数组方式
+<template>
+  <div>
+    <h1>我是LeoMashiro 我接收到的父组件的值是：{{LeoMashiroValue}}</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  // 罗列父组件传进来的属性值
+  props:["LeoMashiroValue"],
+};
+</script>
+
+可以使用对象去接收参数
+props:{
+    leomashiroValue:Number,
+    valueB:Number,
+    valueC:Number
+  }
+
+如果props是个对象 那么这个对象的key是自定义传入参数的属性 value是希望传入的参数类型
+比如我们限制的是数字类型 但是我们传入一个字符串 此时控制台会报错 提示你希望传入number类型
+
+如果props是对象的话 参数可以配置
+比如配置参数必填项
+props:{
+  leomashiroValue:{
+    type:Number,
+    required:true,
+    
+  },
+  valueB:Number,
+  valueC:Number
+}
+
+如果props的值也是一个对象 type代表的是类型 required是一个布尔值 
+如果为true代表的是必填项 如果不填 则会抛出错误
+
+比如default代表的是默认的不传入的值的参数
+
+如果props的default值是Object或者Array需要使用函数return
+props:{
+  leomashiroValue:{
+    type:Object,
+    default:()=>{
+      return {a:100}
+    }
+  },
+  valueB:Number,
+  valueC:Number
+}
+
+validator是数据的校验
+leomashiroValue: {
+  type: Number,
+  // 数据的校验
+  validator: function (value) {
+    return value > 50;
+  }
+}
