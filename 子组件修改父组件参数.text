@@ -1,0 +1,77 @@
+需要注意的是子组件不可以直接修改父组件的值 只能传出一个方法 父组件通过调用这个自定义事件后
+然后在外部修改值
+
+子组件代码
+<template>
+  <div>
+    <h1>
+      我是LeoMashiro 我接收到的父组件的值是：{{ leomashiroValue }}
+      {{ valueB }} {{ valueC }}
+    </h1> 
+    <button @click="add">按我加1</button>
+  </div>
+</template>
+
+<script>
+export default {
+  // 罗列父组件传进来的属性值
+  props: {
+    leomashiroValue:Number,
+    valueB: Number,
+    valueC: Number,
+  },
+  methods:{
+    add(){
+      this.$emit("add")
+    }
+  }
+}
+</script>
+
+<style>
+</style>
+
+$emit方法是vue封装的 用来向父组件返回对应的自定义事件 父组件通过在子组件身上设置对应的自定义事件后设置事件名称
+
+父组件代码
+<template>
+  <div>
+    <LeoMashiro
+      @add="sumNum"
+      :leomashiro-value="a"
+      :value-b="b"
+      :value-c="c"
+    ></LeoMashiro>
+  </div>
+</template>
+
+<script>
+// 引入组件
+import LeoMashiro from "./components/LeoMashiro.vue";
+export default {
+  // 注册组件
+  components: {
+    LeoMashiro,
+  },
+  data() {
+    return {
+      a: 102,
+      b: 130,
+      c: 140,
+    };
+  },
+  methods: {
+    sumNum() {
+      console.log("123");
+    },
+  },
+};
+</script>
+
+<style>
+</style>
+
+@add自定义事件是子组件通过$emit传出来的自定义事件 父组件通过这个事件设置事件方法sumNum 
+然后修改自己的值 从而实现子组件修改父组件的值
+
+这样做的目的就是为了让数据可观察性更强 可维护性更高
